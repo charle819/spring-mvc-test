@@ -10,6 +10,7 @@
 <body>
 	<h1>Employee Data</h1>
 	<h3>List of all employees</h3>
+	<h2 align="center">${error}</h2>
 	<table border="1">
 		<tr>
 			<th>Id</th>
@@ -18,6 +19,7 @@
 			<th>EmailId</th>
 			<th>Contact No</th>
 			<th>Address</th>
+			<th>Action</th>
 		</tr>
 		<c:forEach var="e" items="${allEmployees}">
 			<tr>
@@ -27,11 +29,14 @@
 				<td>${e.e_emailId}</td>
 				<td>${e.e_contactNo}</td>
 				<td>${e.e_address}</td>
+				<td><a href='<c:url value="/emp/update/${e.e_id}"/>'> Update </a></td>
+				<td><a href='<c:url value="/emp/delete/${e.e_id}"/>'> Delete </a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	
 	<br>
 	<h3><a href='<c:url value="/newemp"/>'>Add New Employee</a></h3>
+	
 </body>
 </html>

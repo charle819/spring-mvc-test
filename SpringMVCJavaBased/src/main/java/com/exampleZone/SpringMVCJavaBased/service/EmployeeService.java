@@ -3,6 +3,7 @@ package com.exampleZone.SpringMVCJavaBased.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
@@ -38,13 +39,13 @@ public class EmployeeService {
 		return null;
 	}
 
-	public boolean checkEmployeeExist(Employee e) {
-		if(getEmployeeById(e.getE_id()) !=null )
+	public boolean checkEmployeeExist(long id ) {
+		if(getEmployeeById(id) !=null )
 		{
-			LOGGER.info("Employee with Id : "+e.getE_id()+" exist ");
+			LOGGER.info("Employee with Id : "+id+" exist ");
 			return true;
 		}
-		LOGGER.warning("Employee with Id : "+e.getE_id()+" does not exist");
+		LOGGER.warning("Employee with Id : "+id+" does not exist");
 		return false;
 	}
 
@@ -59,9 +60,19 @@ public class EmployeeService {
 			Employee e = iterator.next();
 			if (e.getE_id() == id) {
 				iterator.remove();
+				
 				LOGGER.info("employee with Id : "+e.getE_id()+" was removed successfully");
 			}
 		}
+	}
+	
+	public void updateEmployee(Employee updateEmp)
+	{
+		/*int index = eList.indexOf(e.getE_id());
+		eList.add(index, e);*/
+		
+		LOGGER.info("Employee with id : "+updateEmp.getE_id()+" was update successfully");
+	
 	}
 
 	private static List<Employee> getDummyEmployees() {
