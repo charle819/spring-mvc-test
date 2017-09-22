@@ -1,6 +1,8 @@
 package com.exampleZone.SpringMVCJavaBased.model;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable{
 
 	private long e_id;
 	private String e_name;
