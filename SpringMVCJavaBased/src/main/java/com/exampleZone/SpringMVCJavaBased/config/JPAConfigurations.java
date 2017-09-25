@@ -14,6 +14,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -63,7 +64,7 @@ public class JPAConfigurations {
 	private Properties jpaProperties()
 	{
 		Properties p  = new Properties();
-		p.setProperty("hibernate.dialect", env.getRequiredProperty("org.hibernate.dialect.MySQL5Dialect"));
+		p.setProperty("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
 		p.setProperty("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
 		p.setProperty("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
 		p.setProperty("hibernate.format_sql", env.getRequiredProperty("hibernate.format_sql"));
@@ -81,7 +82,7 @@ public class JPAConfigurations {
 	{
 		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
 		factoryBean.setDataSource(dataSource());
-		factoryBean.setPackagesToScan(new String[] {"com.exampleZope.SpringMVCJavaBased.model"});
+		factoryBean.setPackagesToScan(new String[] {"com.exampleZone.SpringMVCJavaBased.model"});
 		factoryBean.setJpaVendorAdapter(jpaVendorAdapter());
 		factoryBean.setJpaProperties(jpaProperties());
 		return factoryBean;
@@ -103,5 +104,16 @@ public class JPAConfigurations {
 		return txManager;
 	}
 	
+	/**
+	 * To inject Hibenrnate's session factory
+	 * 
+	 * @return
+	 */
+//	@Bean
+//	public HibernateJpaSessionFactoryBean sessionFactory()
+//	{
+//		return new HibernateJpaSessionFactoryBean();
+//	}
+//	
 	
 }

@@ -6,31 +6,49 @@ import java.lang.reflect.ParameterizedType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  *
  * @author chinmay
  *
- * @param <K>    // do make the entity's id as a serializable object in future
+ * @param <K>    
  * @param <T>
  */
 public abstract class RootDao <K,T extends Serializable> {
 
 	private final Class<T> persistentClass;
 	
+	/**
+	 * Check how does spring inject sessoinFactory without defining a bean to initaialize it in JPAConfiguration class
+	 */
+/*	@Autowired
+	private SessionFactory sessionFactor;*/
+	
+	@PersistenceContext
+	EntityManager entityManager;
 	
 	/*
-	 * reflection is been used here , go thrrough this part 
+	 * reflection is been used here , go through this part 
 	 * and also find other way to fetch Class type of the current extending class at runtime (for method getById() )
 	 * 
-	 * */
-	
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	public RootDao() {
 		this.persistentClass = (Class<T>) ((ParameterizedType)this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
 	}
 	
-	@PersistenceContext
-	EntityManager entityManager;
+	/**
+	 * @return Session from Hibernate
+	 */
+	protected Session getSession()
+	{
+		return entityManager.unwrap(Session.class);
+	}
 	
 	protected EntityManager setEntityManager()
 	{
@@ -57,4 +75,8 @@ public abstract class RootDao <K,T extends Serializable> {
 		entityManager.remove(entity);
 	}
 	
+	protected Criteria getEntityCriteria()
+	{
+		return getSession().createCriteria(persistentClass);
+	}
 }

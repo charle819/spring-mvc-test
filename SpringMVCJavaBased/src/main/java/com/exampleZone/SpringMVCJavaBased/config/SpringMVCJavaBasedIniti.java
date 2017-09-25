@@ -7,7 +7,7 @@ public class SpringMVCJavaBasedIniti extends AbstractAnnotationConfigDispatcherS
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		// TODO Auto-generated method stub
-		return new Class[] {SpringMVCJavaBasedConfig.class};
+		return new Class[] {SpringMVCJavaBasedConfig.class,JPAConfigurations.class};
 	}
 
 	@Override

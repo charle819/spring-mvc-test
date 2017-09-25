@@ -2,32 +2,56 @@ package com.exampleZone.SpringMVCJavaBased.model;
 
 import java.io.Serializable;
 
-public class Employee implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Entity
+@Table(name = "emp_dump")
+public class Employee implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long e_id;
+
+	@NotNull
+	@Column(nullable = false)
 	private String e_name;
+
+	@NotNull
+	@Column(nullable = false)
 	private String e_role;
+
+	@NotNull
+	@Column(nullable = false)
 	private String e_emailId;
+
 	private long e_contactNo;
+
 	private String e_address;
+
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "e_joinDate", nullable = false,updatable=false)
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate joiningDate;
 
 	public Employee() {
 		// TODO Auto-generated constructor stub
 	}
-
-	
-	
-	public Employee(long e_id, String e_name, String e_role, String e_emailId, long e_contactNo, String e_address) {
-		super();
-		this.e_id = e_id;
-		this.e_name = e_name;
-		this.e_role = e_role;
-		this.e_emailId = e_emailId;
-		this.e_contactNo = e_contactNo;
-		this.e_address = e_address;
-	}
-
-
 
 	public long getE_id() {
 		return e_id;
@@ -45,6 +69,15 @@ public class Employee implements Serializable{
 		this.e_name = e_name;
 	}
 
+	public LocalDate getJoiningDate() {
+		return joiningDate;
+	}
+
+	
+	public void setJoiningDate(LocalDate joiningDate) {
+		this.joiningDate = joiningDate;
+	}
+
 	public String getE_role() {
 		return e_role;
 	}
@@ -53,18 +86,13 @@ public class Employee implements Serializable{
 		this.e_role = e_role;
 	}
 
-	
-	
-
 	public String getE_emailId() {
 		return e_emailId;
 	}
 
-
 	public void setE_emailId(String e_emailId) {
 		this.e_emailId = e_emailId;
 	}
-
 
 	public long getE_contactNo() {
 		return e_contactNo;
@@ -82,4 +110,9 @@ public class Employee implements Serializable{
 		this.e_address = e_address;
 	}
 
+	@PrePersist
+	protected void onJoiningDate()
+	{
+		joiningDate = new LocalDate();
+	}
 }

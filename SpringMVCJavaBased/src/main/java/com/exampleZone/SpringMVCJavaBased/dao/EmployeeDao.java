@@ -1,7 +1,9 @@
 package com.exampleZone.SpringMVCJavaBased.dao;
 
+import java.util.List;
 import java.util.logging.Logger;
 
+import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
 import com.exampleZone.SpringMVCJavaBased.model.Employee;
@@ -36,5 +38,11 @@ public class EmployeeDao extends RootDao<Long, Employee> {
 		delete(e);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Employee> getAllEmployees()
+	{
+		Criteria criteria = getEntityCriteria();
+		return (List<Employee>) criteria.list();
+	}
 	
 }

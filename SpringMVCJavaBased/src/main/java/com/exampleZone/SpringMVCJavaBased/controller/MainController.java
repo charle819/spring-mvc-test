@@ -86,12 +86,12 @@ public class MainController {
 	@RequestMapping(value="/emp/update/{id}",method=RequestMethod.POST)
 	public String updateEmployee(@ModelAttribute("employee")Employee employee, ModelMap modelMap )
 	{
-		// need a new property to have distinct employees (ex: emp_no,etc)
-//		Employee updatedEmp = employee;
-//		empService.updateEmployee(updatedEmp);
-//		return "redirect:emp";
+		 
+		Employee updatedEmp = employee;
+		empService.updateEmployee(updatedEmp);
+		return "redirect:/emp";
 		
-		return "siteupdatepage";
+		//return "siteupdatepage";
 	}
 	
 	@RequestMapping(value="/emp/delete/{id}",method=RequestMethod.GET)
